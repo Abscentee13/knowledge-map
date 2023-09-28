@@ -1,0 +1,17 @@
+.setting{
+    position: fixed;
+    top: 130px;
+    left: 0px;
+    z-index: 100;
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.settingItem{
+    min-width: 50px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: left;
+}

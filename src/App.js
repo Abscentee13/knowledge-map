@@ -1,25 +1,53 @@
-import logo from './logo.svg';
-import './App.css';
+import {useState} from "react";
+import { lightTheme, darkTheme } from './themes/theme';
+import css from './App.module.css';
+import {Navigate, Route, Routes} from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { ThemeProvider } from "@material-ui/core/styles";
+import { CssBaseline } from '@material-ui/core';
+import {LanguageProvider} from "./language/language-context";
+import { MainLayout } from './layouts';
+import {Header, ThemeSelection, LanguageSwitcher} from './components';
+import { ThemeContext } from './themes/theme-context';
+
+
+const App = () => {
+
+    const [theme, setTheme] = useState(darkTheme);
+
+    const toggleTheme = () => {
+        setTheme(theme === lightTheme ? darkTheme : lightTheme);
+    };
+
+    return (
+        <Provider store={store}>
+            <LanguageProvider>
+                <ThemeContext.Provider value={{ theme, setTheme: toggleTheme }}>
+                    <ThemeProvider theme={theme}>
+                        <CssBaseline />
+
+                        <div className={css.setting}>
+                            <div className={css.settingItem}>
+                                <ThemeSelection />
+                            </div>
+                            <div className={css.settingItem}>
+                                <LanguageSwitcher />
+                            </div>
+
+                        </div>
+                        <Header />
+                        <Routes>
+                            <Route index element={ <Navigate to={'home'} /> } />
+                            <Route path={'home'} element={<MainLayout/>}/>
+
+                        </Routes>
+                    </ThemeProvider>
+                </ThemeContext.Provider>
+            </LanguageProvider>
+        </Provider>
+    );
 }
 
-export default App;
+export {App};
