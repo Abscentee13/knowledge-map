@@ -14,7 +14,7 @@ return(
         <div className={css.header}>
             <div className={css.headerLogo}>
             <Typography variant="h5" component="h2" color={theme.palette.primary.contrastText}>
-                React module work
+                Co module work
                 for Okten Web School
             </Typography>
             </div>
